@@ -48,6 +48,12 @@ gulp.task('js-main', () => {
 	;
 });
 
+gulp.task('resources', function () {
+	gulp.src('node_modules/font-awesome/fonts/**')
+		.pipe(gulp.dest('www/fonts'))
+	;
+});
+
 
 gulp.task('watch',function() {
 	gulp.watch('src/scss/**/*.scss', ['scss']);
@@ -55,5 +61,5 @@ gulp.task('watch',function() {
 });
 
 
-gulp.task('default', ['scss', 'js-vendor', 'js-main', 'watch']);
-gulp.task('production', ['scss', 'js-vendor', 'js-main']);
+gulp.task('production', ['scss', 'js-vendor', 'js-main', 'resources']);
+gulp.task('default', ['production', 'watch']);
