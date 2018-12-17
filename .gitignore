@@ -1,0 +1,8 @@
+.idea/
+node_modules/
+www/js/
+www/css/
+www/fonts/
+.DS_Store
+*._
+!.gitkeep
