@@ -1,0 +1,84 @@
+#!/bin/bash
+
+# Vars
+BROWSER=true
+HOST_AND_PORT=0.0.0.0:8000
+
+# Colors
+NORMAL=$(tput sgr0)
+RED=$(tput setaf 1)
+GREEN=$(tput setaf 2)
+YELLOW=$(tput setaf 3)
+BLUE=$(tput setaf 4)
+
+if [ "$1" ]; then
+    HOST_AND_PORT=$1
+fi
+
+
+# Args
+while [ $# -gt 0 ]; do
+    case "$1" in
+        --no-browser)
+            BROWSER=false
+            ;;
+        --help)
+            printf "${NORMAL}
+Usage: ${0} ${YELLOW}<host:port> [options...]${NORMAL}
+
+    host:port       Hostname + port to run server on.
+                    Default: ${YELLOW}0.0.0.0:8200${NORMAL}
+
+    --no-browser    Do not open a browser
+
+${NORMAL}"
+            exit
+            ;;
+    esac
+    shift
+done
+
+
+# Initial build
+if [ ! -f public_html/js/main.min.js ]; then
+    printf "${YELLOW}
+******************************************************
+* App not initialized. Running npm install and gulp. *
+******************************************************
+${NORMAL}"
+    npm i
+    npx gulp production
+fi
+
+
+URL=http://${HOST_AND_PORT}
+
+if [ "$BROWSER" = true ]; then
+    if which chromium-browser > /dev/null
+    then
+        printf "${GREEN}\nOpening chromium-browser${NORMAL}\n"
+        chromium-browser --start-fullscreen $URL
+    elif which chromium > /dev/null
+    then
+        printf "${GREEN}\nOpening chromium${NORMAL}\n"
+        chromium --start-fullscreen $URL
+    elif which xdg-open > /dev/null
+    then
+        printf "${GREEN}\nOpening browser window${NORMAL}\n"
+        xdg-open $URL
+    elif which gnome-open > /dev/null
+    then
+        printf "${GREEN}\nOpening browser window${NORMAL}\n"
+        gnome-open $URL
+    else
+        printf "${GREEN}\nOpening URL${NORMAL}\n"
+        open $URL
+    fi
+else
+    printf "${GREEN}\nNot opening browser window (${NORMAL}--no-browser${GREEN} argument was set) ${NORMAL}\n"
+fi
+
+printf "${GREEN}Starting local web server at: ${NORMAL}http://${HOST_AND_PORT}/\n
+"
+
+php -S ${HOST_AND_PORT} -t app/www/
