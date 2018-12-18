@@ -81,4 +81,4 @@ fi
 printf "${GREEN}Starting local web server at: ${NORMAL}http://${HOST_AND_PORT}/\n
 "
 
-php -S ${HOST_AND_PORT} -t app/www/
+php -S ${HOST_AND_PORT} -t /var/www/public_html/
