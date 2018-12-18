@@ -14,9 +14,10 @@ if ( strpos($src, 'http') === 0 ) {
 }
 
 
-$cmd = 'cvlc "' . $path . '" --play-and-exit --no-video';
+$cmd = 'cvlc "' . $path . '" --play-and-exit --no-video > /dev/null &';
 
 exec($cmd);
 
+header('Content-Length: ' . strlen($cmd));
 header('Content-Type: text/plain');
 echo $cmd;

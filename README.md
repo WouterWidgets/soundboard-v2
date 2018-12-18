@@ -14,20 +14,10 @@ Installation
 
 Serve
 -----
-- Run `php -S 0.0.0.0:8000 -t public_html/` or serve from apache/nginx or whatever
+- Run `php -S 0.0.0.0:8000 -t /var/www/public_html/` or serve from apache/nginx or whatever
 
 Raspberry Pi installation
 -------------------------
-
-### Apache
-- Run `sudo apt-get update`
-- Run `sudo apt install -y apache2`
-- Run `sudo chown -R pi:www-data /var/www/`
-- Run `sudo chmod -R 770 /var/www/`
-- Run `sudo nano /etc/apache2/sites-enabled/000-default.conf`
-- Find the line `/var/www/html` and update it to `/var/www/public_html`
-- Run `sudo service apache2 restart`
-- Run `sudo rm -f /var/www/html/index.html`
 
 ### PHP
 - Run `sudo apt install php php-mbstring`
