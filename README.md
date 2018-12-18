@@ -10,4 +10,4 @@ WORK IN PROGRESS
 - Run `gulp production`
 
 ## Serve
-- Run `php -S 0.0.0.0:8000 -t www/` or serve from apache/nginx or whatever
+- Run `php -S 0.0.0.0:8000 -t public_html/` or serve from apache/nginx or whatever

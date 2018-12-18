@@ -4,7 +4,7 @@
 
     <?php
 
-    $baseDir = __DIR__ . '/../../www/';
+    $baseDir = __DIR__ . '/../../public_html/';
     $dir = filter_input(INPUT_GET, 'dir', FILTER_SANITIZE_STRING) ?: 'files';
     $dirPath = $baseDir . $dir;
 
