@@ -12,7 +12,9 @@ YELLOW=$(tput setaf 3)
 BLUE=$(tput setaf 4)
 
 if [ "$1" ]; then
-    HOST_AND_PORT=$1
+    if [[ ! $1 = -* ]]; then
+        HOST_AND_PORT=$1
+    fi
 fi
 
 
@@ -81,4 +83,4 @@ fi
 printf "${GREEN}Starting local web server at: ${NORMAL}http://${HOST_AND_PORT}/\n
 "
 
-php -S ${HOST_AND_PORT} -t /var/www/public_html/
+php -S ${HOST_AND_PORT} -t ./public_html/
