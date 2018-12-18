@@ -37,6 +37,9 @@ Raspberry Pi installation
 - Run `sudo apt install -y npm`
 - Run `sudo npm i -g npm`
 
+### VLC
+- Run `sudo apt install -y vlc`
+
 ### Install application
 - Run `git clone https://github.com/WouterWidgets/soundboard-v2 /var/www`
 - Follow this README.md
@@ -51,3 +54,7 @@ Raspberry Pi installation
 - Run `sudo pure-pw mkdb`
 - Run `sudo ln -s /etc/pure-ftpd/conf/PureDB /etc/pure-ftpd/auth/60puredb`
 - Run `sudo service pure-ftpd restart`
+
+### Misc tips for running it on Raspberry Pi
+- You might want to set the 3.5mm audio as the default audio device.
+- Increase volume using `amixer sset PCM,0 90%`

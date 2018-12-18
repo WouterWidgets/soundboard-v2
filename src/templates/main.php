@@ -60,7 +60,7 @@
 
             ?>
 			<button class="file"
-					style="background-image:url(<?= $image ? ($dir . '/' . rawurlencode($image)) : ''; ?>)"
+					style="background-image:url('<?= $image ? ($dir . '/' . rawurlencode($image)) : ''; ?>')"
 					data-type="<?= $type; ?>"
 					data-src="<?= $dir . '/' . rawurlencode($file); ?>"
 			></button>
@@ -82,6 +82,10 @@
 	<button class="nav" data-action="scroll:down">
 		<span class="fa fa-arrow-down"></span>
 	</button>
+
+	<!--<button class="nav" data-action="speak">
+		<span class="fa fa-bullhorn"></span>
+	</button>-->
 
 	<button class="nav" data-action="player:stop" style="margin-top:54px">
 		<span class="fa fa-stop"></span>
