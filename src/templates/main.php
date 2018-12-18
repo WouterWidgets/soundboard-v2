@@ -60,7 +60,7 @@
 
             ?>
 			<button class="file"
-					style="background-image:url(<?= $image ? rawurlencode($dir . '/' . $image) : ''; ?>)"
+					style="background-image:url(<?= $image ? ($dir . '/' . rawurlencode($image)) : ''; ?>)"
 					data-type="<?= $type; ?>"
 					data-src="<?= $dir . '/' . rawurlencode($file); ?>"
 			></button>
