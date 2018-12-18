@@ -1,5 +1,3 @@
-<video id="player" controls></video>
-
 <div id="files">
 
     <?php
@@ -87,7 +85,7 @@
 		<span class="fa fa-bullhorn"></span>
 	</button>
 
-	<button class="nav xhidden-local" data-action="url">
+	<button class="nav xhidden-local" data-action="link">
 		<span class="fa fa-link"></span>
 	</button>
 
@@ -95,4 +93,48 @@
 		<span class="fa fa-stop"></span>
 	</button>
 
+</div>
+
+<video id="player" controls></video>
+
+<div class="modal" id="speech-modal">
+	<form action="" onsubmit="speechModalSubmit();return false">
+		<div class="form-group">
+			<label for="speech-text">Text</label>
+			<textarea name="text" id="speech-text" cols="30" rows="2"></textarea>
+		</div>
+		<div class="form-group">
+			<label for="speech-lang">Language</label>
+			<select name="lang" id="speech-lang">
+				<option value="en-US">English (US)</option>
+				<option value="en-GB">English (UK)</option>
+				<option value="de-DE">German</option>
+				<option value="fr-FR">French</option>
+				<option value="nl-NL">Dutch</option>
+				<option value="nl-BE">Vlamish</option>
+			</select>
+		</div>
+		<div class="form-group width-50">
+			<label for="speech-speed">Speed</label>
+			<input type="range" min="1" max="100" value="50" id="speech-speed" name="speed">
+		</div>
+		<div class="form-group width-50">
+			<label for="speech-pitch">Pitch</label>
+			<input type="range" min="1" max="100" value="50" id="speech-pitch" name="pitch">
+		</div>
+		<button type="submit" class="form-button">Say it</button>
+		<button type="button" class="form-button" data-action="modal:hide">Back</button>
+	</form>
+</div>
+
+<div class="modal" id="link-modal">
+	<form action="" onsubmit="linkModalSubmit();return false">
+		<p>Enter an audio, video, stream or YouTube URL</p>
+		<div class="form-group">
+			<label for="link-url">URL</label>
+			<input type="url" name="link-url" id="link-url">
+		</div>
+		<button type="submit" class="form-button">Play</button>
+		<button type="button" class="form-button" data-action="modal:hide">Back</button>
+	</form>
 </div>

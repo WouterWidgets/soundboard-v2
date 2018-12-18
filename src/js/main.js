@@ -1,11 +1,15 @@
 let $player;
 let $files;
+let $speechModal;
+let $linkModal;
 
 var currentFile;
 
 $(() => {
 	$player = $('#player');
 	$files = $('#files');
+	$speechModal = $('#speech-modal');
+	$linkModal = $('#link-modal');
 
 	$player.on('ended', () => {
 		$player.hide();
@@ -40,15 +44,16 @@ function actionClick() {
 			);
 			break;
 
-		case 'url':
-			playFile({
-				type: 'url',
-				src: prompt('Enter an audio, video, stream or YouTube URL:')
-			});
+		case 'link':
+			$linkModal.show();
+			break;
+
+		case 'modal:hide':
+			$('.modal').hide();
 			break;
 
 		case 'speak':
-			speak(prompt('Enter some text:'));
+			$speechModal.show();
 			break;
 	}
 }
@@ -123,13 +128,13 @@ function stopRemote() {
 	playRemote({type: 'stop'});
 }
 
-function speak(text, options) {
+function speak(options) {
 
 	options = options || {};
 
 	let params = {
 		lang: options.lang || 'en-US',
-		text: text,
+		text: options.text,
 		speed: options.speed || 0.5,
 		pitch: options.pitch || 0.5,
 		volume: 1
@@ -140,5 +145,24 @@ function speak(text, options) {
 	playFile({
 		type: 'speech',
 		src: uri + $.param(params)
+	});
+}
+
+function speechModalSubmit() {
+
+	let options = {
+		text: $('#speech-text').val(),
+		lang: $('#speech-lang').val(),
+		speed: +$('#speech-speed').val() / 100,
+		pitch: +$('#speech-pitch').val() / 100,
+	};
+
+	speak(options);
+}
+
+function linkModalSubmit() {
+	playFile({
+		type: 'url',
+		src: $('#link-url').val()
 	});
 }
