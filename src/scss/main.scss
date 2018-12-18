@@ -5,6 +5,13 @@
   box-sizing: border-box;
 }
 
+.local .visible-remote,
+.local .hidden-local,
+.remote .visible-local,
+.remote .hidden-remote {
+  display: none;
+}
+
 body {
   margin: 0;
   font: $font-size-base sans-serif;

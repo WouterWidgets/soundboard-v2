@@ -39,6 +39,17 @@ function actionClick() {
 				320
 			);
 			break;
+
+		case 'url':
+			playFile({
+				type: 'url',
+				src: prompt('Enter an audio, video, stream or YouTube URL:')
+			});
+			break;
+
+		case 'speak':
+			speak(prompt('Enter some text:'));
+			break;
 	}
 }
 
@@ -85,6 +96,9 @@ function playFile(file) {
 }
 
 function playRemote(file) {
+
+	currentFile = file;
+
 	$.ajax({
 		url: 'playremote.php',
 		data: {
@@ -95,7 +109,7 @@ function playRemote(file) {
 }
 
 function stop() {
-	if ( shouldPlayRemote(currentFile) ) {
+	if ( !currentFile || shouldPlayRemote(currentFile) ) {
 		stopRemote();
 	}
 	$player
@@ -109,6 +123,22 @@ function stopRemote() {
 	playRemote({type: 'stop'});
 }
 
-function speak(text) {
-	speechSynthesis.speak(new SpeechSynthesisUtterance(text));
+function speak(text, options) {
+
+	options = options || {};
+
+	let params = {
+		lang: options.lang || 'en-US',
+		text: text,
+		speed: options.speed || 0.5,
+		pitch: options.pitch || 0.5,
+		volume: 1
+	};
+
+	let uri = 'https://www.google.com/speech-api/v1/synthesize?ie=UTF-8&';
+
+	playFile({
+		type: 'speech',
+		src: uri + $.param(params)
+	});
 }

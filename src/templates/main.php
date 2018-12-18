@@ -76,21 +76,23 @@
 		<span class="fa fa-home"></span>
 	</button>
 
-	<button class="nav" data-action="scroll:up" style="margin-top:54px">
+	<button class="nav" data-action="scroll:up">
 		<span class="fa fa-arrow-up"></span>
 	</button>
 	<button class="nav" data-action="scroll:down">
 		<span class="fa fa-arrow-down"></span>
 	</button>
 
-	<!--<button class="nav" data-action="speak">
+	<button class="nav xhidden-local" data-action="speak">
 		<span class="fa fa-bullhorn"></span>
-	</button>-->
+	</button>
 
-	<button class="nav" data-action="player:stop" style="margin-top:54px">
+	<button class="nav xhidden-local" data-action="url">
+		<span class="fa fa-link"></span>
+	</button>
+
+	<button class="nav" data-action="player:stop">
 		<span class="fa fa-stop"></span>
 	</button>
-	<!--<button class="nav">
-		<span class="fa fa-cog"></span>
-	</button>-->
+
 </div>
