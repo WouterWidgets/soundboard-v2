@@ -11,24 +11,10 @@ if ($config->whitelist_enabled) {
 }
 
 
-function get_youtube_video_ID($youtube_video_url)
+function get_youtube_video_ID($url)
 {
-    $pattern =
-        '%                 
-    (?:youtube                    # Match any youtube url www or no www , https or no https
-    (?:-nocookie)?\.com/          # allows for the nocookie version too.
-    (?:[^/]+/.+/                  # Once we have that, find the slashes
-    |(?:v|e(?:mbed)?)/|.*[?&]v=)  # Check if its a video or if embed 
-    |youtu\.be/)                  # Allow short URLs
-    ([^"&?/ ]{11})                # Once its found check that its 11 chars.
-    %i';
-    // Checks if it matches a pattern and returns the value
-    if (preg_match($pattern, $youtube_video_url, $match)) {
-        return $match[1];
-    }
-
-    // if no match return false.
-    return $youtube_video_url;
+    preg_match('%(?:youtube(?:-nocookie)?\.com/(?:[^/]+/.+/|(?:v|e(?:mbed)?)/|.*[?&]v=)|youtu\.be/)([^"&?/ ]{11})%i', $url, $match);
+    return $match[1] ?: $url;
 }
 
 
@@ -42,12 +28,13 @@ $response = (object)[
 ];
 
 $temp = 'temp/' . md5($ip) . '.m4a';
-$tempPath = __DIR__ . '/../' . $temp;
+$tempPath = __DIR__ . '/' . $temp;
 
 switch ($action) {
 
     case 'download':
 
+        @unlink($tempPath);
         $cmd = 'youtube-dl -f 140 "' . $videoID . '" -o "' . $tempPath . '"';
         exec($cmd);
 
@@ -57,25 +44,28 @@ switch ($action) {
 
     case 'crop':
 
-//        $start = '00:00:38.00';
-//        $end = '00:00:53.00';
         $start = filter_input(INPUT_GET, 'start', FILTER_SANITIZE_STRING) ?: '';
         $end = filter_input(INPUT_GET, 'end', FILTER_SANITIZE_STRING) ?: '';
 
-        $dir = filter_input(INPUT_GET, 'dir', FILTER_SANITIZE_STRING) ?: '';
+        $dir = filter_input(INPUT_GET, 'dir', FILTER_SANITIZE_STRING) ?: 'files';
+        $dir = rtrim(str_replace('..', '', $dir), '/');
+        if ( strpos($dir, 'files') !== 0 ) {
+            $dir = 'files';
+        }
+
         $filename = filter_input(INPUT_GET, 'filename', FILTER_SANITIZE_STRING) ?: md5(time());
+        $imageId = filter_input(INPUT_GET, 'imageId', FILTER_SANITIZE_STRING) ?: '3';
 
-        $filePath = __DIR__ . '/files/' . $dir . '/' . $filename . '.m4a';
+        $filePath = __DIR__ . '/' . $dir . '/' . $filename . '.m4a';
 
-        $imgId = '';
-        if ($imgId) {
+        if ($imageId) {
             file_put_contents(
                 str_replace('.m4a', '.jpg', $filePath),
-                file_get_contents('https://img.youtube.com/vi/' . $videoID . '/0.jpg')
+                file_get_contents('https://img.youtube.com/vi/' . $videoID . '/'. $imageId .'.jpg')
             );
         }
 
-        $cmd = 'ffmpeg -i "' . $tempPath . '" ';
+        $cmd = 'ffmpeg -y -i "' . $tempPath . '" ';
 
         if ($start) {
             $cmd .= '-ss ' . $start . ' ';

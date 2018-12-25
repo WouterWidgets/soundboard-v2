@@ -25,6 +25,7 @@ gulp.task('js-vendor', () => {
 	gulp
 		.src([
 			'node_modules/jquery/dist/jquery.min.js',
+			'node_modules/moment/min/moment.min.js',
 		])
 		.pipe(sourcemaps.init())
 		.pipe(concat('vendor.min.js'))
