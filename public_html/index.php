@@ -1,5 +1,15 @@
 <?php
 
+$ip = (isset($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : '');
+$whitelist = [
+	'127.0.0.1',
+	'::1',
+	'192.168.2.123',
+];
+if ( !in_array($ip, $whitelist) ) {
+	die($ip . ' not whitelisted');
+}
+
 $page = 'main';
 
 $templateDir = __DIR__ . '/../src/templates/';

@@ -3,6 +3,8 @@ node_modules/
 public_html/js/
 public_html/css/
 public_html/fonts/
+public_html/files/
 .DS_Store
 *._
+.local
 !.gitkeep
