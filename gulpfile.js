@@ -11,6 +11,10 @@ gulp.task('scss', () => {
 		.src('src/scss/main.scss')
 		.pipe(sourcemaps.init())
 		.pipe(sass({outputStyle:'compressed'}))
+		.on('error', function (err) {
+			console.error(err.toString());
+			this.emit('end');
+		})
 		.pipe(rename('main.min.css'))
 		.pipe(sourcemaps.write('./'))
 		.pipe(gulp.dest('public_html/css/'))
@@ -42,6 +46,10 @@ gulp.task('js-main', () => {
 		.pipe(babel({
 			presets: ['env']
 		}))
+		.on('error', function (err) {
+			console.error(err.toString());
+			this.emit('end');
+		})
 		.pipe(uglify())
 		.pipe(sourcemaps.write(''))
 		.pipe(gulp.dest('public_html/js/'))

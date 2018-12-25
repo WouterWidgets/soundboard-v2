@@ -1,4 +1,3 @@
-let $player;
 let $files;
 let $speechModal;
 let $linkModal;
@@ -6,14 +5,9 @@ let $linkModal;
 var currentFile;
 
 $(() => {
-	$player = $('#player');
 	$files = $('#files');
 	$speechModal = $('#speech-modal');
 	$linkModal = $('#link-modal');
-
-	$player.on('ended', () => {
-		$player.hide();
-	});
 
 	$(document)
 		.on('click', 'button.file', fileClick)
@@ -68,39 +62,7 @@ function fileClick() {
 	playFile(file);
 }
 
-function shouldPlayRemote(file) {
-	return (
-		!IS_LOCAL ||
-		!~[
-			'audio',
-			'video',
-			'speech',
-		].indexOf((file || currentFile).type)
-	);
-}
-
 function playFile(file) {
-
-	currentFile = file;
-
-	if ( shouldPlayRemote(file) ) {
-		playRemote(file);
-		return;
-	}
-
-	if ( file.type === 'video') {
-		$player.show();
-	}
-
-	$player
-		.attr('src', file.src)
-		.get(0)
-		.play()
-	;
-
-}
-
-function playRemote(file) {
 
 	currentFile = file;
 
@@ -114,18 +76,7 @@ function playRemote(file) {
 }
 
 function stop() {
-	if ( !currentFile || shouldPlayRemote(currentFile) ) {
-		stopRemote();
-	}
-	$player
-		.hide()
-		.get(0)
-		.pause()
-	;
-}
-
-function stopRemote() {
-	playRemote({type: 'stop'});
+	playFile({type: 'stop'});
 }
 
 function speak(options) {

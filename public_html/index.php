@@ -1,16 +1,16 @@
 <?php
 
 $ip = (isset($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : '');
-$whitelist = [
-	'127.0.0.1',
-	'::1',
-	'192.168.2.123',
-];
-if ( !in_array($ip, $whitelist) ) {
-	die($ip . ' not whitelisted');
-}
+
+$config = json_decode(file_get_contents(
+    __DIR__ . '/../config.json'
+));
 
 $page = 'main';
+if ( $config->whitelist_enabled ) {
+    require 'whitelist.php';
+}
+
 
 $templateDir = __DIR__ . '/../src/templates/';
 $templatePath = $templateDir . $page . '.php';

@@ -6,6 +6,8 @@ Requirements
 ------------
 - PHP 7+
 - NodeJS + NPM
+- youtube-dl (optional for YouTube editor) `sudo apt install youtube-dl`
+- ffmpeg (optional for YouTube editor) `sudo apt install ffmpeg`
 
 Installation
 ------------

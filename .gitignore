@@ -3,7 +3,11 @@ node_modules/
 public_html/js/
 public_html/css/
 public_html/fonts/
-public_html/files/
+public_html/files/*
+!public_html/files/.gitkeep
+public_html/temp/*
+!public_html/temp/.gitkeep
+log/*.log
 .DS_Store
 *._
 .local

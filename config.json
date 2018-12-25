@@ -1,0 +1,13 @@
+{
+    "player": {
+        "extensions": ["mp3", "wav", "m4a", "mp4"],
+        "stop_before_play": false
+    },
+    "log_enabled": true,
+    "whitelist_enabled": true,
+    "whitelist": [
+        "127.0.0.1",
+        "::1",
+        "192.168.2.123"
+    ]
+}
