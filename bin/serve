@@ -55,6 +55,10 @@ fi
 
 URL=http://${HOST_AND_PORT}
 
+printf "${GREEN}Starting local web server at: ${NORMAL}http://${HOST_AND_PORT}/\n"
+
+php -S ${HOST_AND_PORT} -t ./public_html/ > /dev/null &
+
 if [ "$BROWSER" = true ]; then
     if which chromium-browser > /dev/null
     then
@@ -79,8 +83,3 @@ if [ "$BROWSER" = true ]; then
 else
     printf "${GREEN}\nNot opening browser window (${NORMAL}--no-browser${GREEN} argument was set) ${NORMAL}\n"
 fi
-
-printf "${GREEN}Starting local web server at: ${NORMAL}http://${HOST_AND_PORT}/\n
-"
-
-php -S ${HOST_AND_PORT} -t ./public_html/
