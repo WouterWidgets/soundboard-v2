@@ -42,7 +42,7 @@ done
 
 
 # Initial build
-if [ ! -f public_html/js/main.min.js ]; then
+if [ ! -f /var/www/public_html/js/main.min.js ]; then
     printf "${YELLOW}
 ******************************************************
 * App not initialized. Running npm install and gulp. *
@@ -57,7 +57,7 @@ URL=http://${HOST_AND_PORT}
 
 printf "${GREEN}Starting local web server at: ${NORMAL}http://${HOST_AND_PORT}/\n"
 
-php -S ${HOST_AND_PORT} -t ./public_html/ > /dev/null &
+php -S ${HOST_AND_PORT} -t /var/www/public_html/ > /dev/null &
 
 if [ "$BROWSER" = true ]; then
     if which chromium-browser > /dev/null
