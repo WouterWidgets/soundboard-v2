@@ -3,6 +3,7 @@
 # Vars
 BROWSER=true
 HOST_AND_PORT=0.0.0.0:8000
+PROJECT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )/.." >/dev/null 2>&1 && pwd )"
 
 # Colors
 NORMAL=$(tput sgr0)
@@ -42,7 +43,7 @@ done
 
 
 # Initial build
-if [ ! -f /var/www/public_html/js/main.min.js ]; then
+if [ ! -f ${PROJECT_DIR}/public_html/js/main.min.js ]; then
     printf "${YELLOW}
 ******************************************************
 * App not initialized. Running npm install and gulp. *
@@ -57,7 +58,7 @@ URL=http://${HOST_AND_PORT}
 
 printf "${GREEN}Starting local web server at: ${NORMAL}http://${HOST_AND_PORT}/\n"
 
-php -S ${HOST_AND_PORT} -t /var/www/public_html/ > /dev/null &
+php -S ${HOST_AND_PORT} -t ${PROJECT_DIR}/public_html/ > /dev/null &
 
 if [ "$BROWSER" = true ]; then
     if which chromium-browser > /dev/null
