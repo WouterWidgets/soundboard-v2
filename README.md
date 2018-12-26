@@ -11,6 +11,7 @@ Requirements
 
 Installation
 ------------
+- Copy `config.json.dist` to `config.json` and modify it to your needs.
 - Run `npm i` (this may take a while, so alternatively you may install locally and upload `node_modules` instead)
 - Run `npx gulp production` (or `gulp production` if you have gulp installed globally)
 
