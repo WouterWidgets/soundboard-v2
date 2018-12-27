@@ -59,6 +59,7 @@ function actionClick() {
 			break;
 
 		case 'link':
+			$modals.hide();
 			$linkModal.show();
 			break;
 
@@ -67,10 +68,12 @@ function actionClick() {
 			break;
 
 		case 'speak':
+			$modals.hide();
 			$speechModal.show();
 			break;
 
 		case 'upload':
+			$('#crop-audio-preview').get(0).pause();
 			$modals.hide();
 			$uploadModal.show();
 			break;

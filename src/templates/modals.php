@@ -42,14 +42,16 @@
                 <option value="nl-BE">Vlamish</option>
             </select>
         </div>
-        <div class="form-group width-50">
-            <label for="speech-speed">Speed</label>
-            <input type="range" min="1" max="100" value="50" id="speech-speed" name="speed">
-        </div>
-        <div class="form-group width-50">
-            <label for="speech-pitch">Pitch</label>
-            <input type="range" min="1" max="100" value="50" id="speech-pitch" name="pitch">
-        </div>
+		<div class="form-group">
+			<div class="width-50">
+				<label for="speech-speed">Speed</label>
+				<input type="range" min="1" max="100" value="50" id="speech-speed" name="speed">
+			</div>
+			<div class="width-50">
+				<label for="speech-pitch">Pitch</label>
+				<input type="range" min="1" max="100" value="50" id="speech-pitch" name="pitch">
+			</div>
+		</div>
         <button type="submit" class="form-button">Say it</button>
         <button type="button" class="form-button" data-action="modal:hide">Back</button>
     </form>
