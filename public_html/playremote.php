@@ -10,8 +10,8 @@ if ( $config->whitelist_enabled ) {
     require 'whitelist.php';
 }
 
-$type = filter_input(INPUT_GET, 'type', FILTER_SANITIZE_STRING) ?: 'audio';
-$src = filter_input(INPUT_GET, 'src', FILTER_SANITIZE_STRING);
+$type = filter_input(INPUT_POST, 'type', FILTER_SANITIZE_STRING) ?: 'audio';
+$src = filter_input(INPUT_POST, 'src', FILTER_SANITIZE_STRING);
 
 $src = urldecode($src);
 

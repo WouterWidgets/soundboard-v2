@@ -54,9 +54,16 @@ ${NORMAL}"
 fi
 
 
+# Clear log
+truncate -s 0 ${PROJECT_DIR}/log/soundboard.log
+
+
+# Serve
 URL=http://${HOST_AND_PORT}
 
 printf "${GREEN}Starting local web server at: ${NORMAL}http://${HOST_AND_PORT}/\n"
+
+pkill php
 
 php -S ${HOST_AND_PORT} -t ${PROJECT_DIR}/public_html/ > /dev/null &
 

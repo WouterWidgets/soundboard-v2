@@ -1,6 +1,7 @@
 <?php
 
 $ip = (isset($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : '');
+$server_ip = exec('hostname -I');
 
 $config = json_decode(file_get_contents(
     __DIR__ . '/../config.json'

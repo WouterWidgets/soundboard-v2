@@ -88,10 +88,6 @@ button.nav {
   font-size: 24px;
 }
 
-.local button.nav:first-child {
-  margin-top: $nav-width;
-}
-
 .modal {
   display: none;
   position: fixed;
@@ -120,6 +116,18 @@ button.nav {
       top: 50%;
       margin: -32px 0 0 -32px;
     }
+  }
+
+  > h1, > h2, > h3 {
+    margin-bottom: .5em;
+
+    &:first-child {
+      margin-top: 0;
+    }
+  }
+
+  .message {
+    margin: 0;
   }
 }
 
@@ -175,6 +183,12 @@ form {
     margin-top: 20px;
   }
 
+  img {
+    max-width: 75%;
+    height: auto;
+    margin: 1em 0;
+  }
+
 }
 
 .width-50 {
@@ -196,4 +210,16 @@ form {
 
 audio {
   width: 100%;
+}
+
+hr {
+  margin: 2em 0;
+  height: 0;
+  border-top: none;
+  border-bottom: 1px solid rgba($main-color, .5);
+}
+
+code {
+  font-size: $font-size-base * 0.75;
+  color: rgba($main-color, .75);
 }

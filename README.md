@@ -14,6 +14,7 @@ Installation
 - Copy `config.json.dist` to `config.json` and modify it to your needs.
 - Run `npm i` (this may take a while, so alternatively you may install locally and upload `node_modules` instead)
 - Run `npx gulp production` (or `gulp production` if you have gulp installed globally)
+- You probably want to update the `upload_max_filesize` and `post_max_size` in `php.ini` if it is still set to the default 2/8Mb.
 
 Serve
 -----

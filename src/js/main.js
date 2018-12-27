@@ -1,10 +1,14 @@
 let $files;
+
+let $settingsModal;
 let $speechModal;
 let $linkModal;
+let $uploadModal;
 let $youtubeModal;
 let $cropModal;
 
 var currentFile;
+var currentAddType;
 var currentVideoID;
 var currentAudioPreview;
 var cropStart;
@@ -12,8 +16,10 @@ var cropEnd;
 
 $(() => {
 	$files = $('#files');
+	$settingsModal = $('#settings-modal');
 	$speechModal = $('#speech-modal');
 	$linkModal = $('#link-modal');
+	$uploadModal = $('#upload-modal');
 	$youtubeModal = $('#youtube-modal');
 	$cropModal = $('#crop-modal');
 
@@ -25,8 +31,14 @@ $(() => {
 
 function actionClick() {
 	let $button = $(this);
+	let $modals = $('.modal');
 
 	switch ($button.data('action')) {
+
+		case 'settings':
+			$modals.hide();
+			$settingsModal.show();
+			break;
 
 		case 'player:stop':
 			stop();
@@ -51,16 +63,21 @@ function actionClick() {
 			break;
 
 		case 'modal:hide':
-			$('.modal').hide();
+			$modals.hide();
 			break;
 
 		case 'speak':
 			$speechModal.show();
 			break;
 
+		case 'upload':
+			$modals.hide();
+			$uploadModal.show();
+			break;
+
 		case 'youtube':
 			$('#crop-audio-preview').get(0).pause();
-			$cropModal.hide();
+			$modals.hide();
 			$youtubeModal.show();
 			break;
 	}
@@ -82,6 +99,7 @@ function playFile(file) {
 
 	$.ajax({
 		url: 'playremote.php',
+		type: 'POST',
 		data: {
 			type: file.type,
 			src: file.src,
@@ -132,26 +150,64 @@ function linkModalSubmit() {
 	});
 }
 
-var youtubeCropXHR = null;
+function uploadModalSubmit() {
+
+	currentAddType = 'MEDIA_UPLOAD';
+
+	$uploadModal.find('.loader-spinner').show();
+
+	const files = $('#upload-file').get(0).files;
+	const formData = new FormData();
+	formData.append('file', files[0]);
+	formData.append('action', 'media-upload');
+
+	$.ajax({
+		url: 'editor.php',
+		type: 'POST',
+		processData: false,
+		contentType: false,
+		data: formData,
+		success: (response) => {
+			$uploadModal.find('.loader-spinner').hide();
+
+			if (response.preview) {
+				currentVideoID = response.videoID;
+				currentAudioPreview = response.preview;
+
+				$uploadModal.hide();
+				$cropModal.show();
+
+				initCrop();
+			}
+
+		},
+		error: () => {
+			$uploadModal.find('.loader-spinner').hide();
+		}
+	});
+
+}
 
 function youtubeModalSubmit() {
+
+	currentAddType = 'YOUTUBE';
 
 	let videoID = $('#youtube-video-id').val();
 
 	$youtubeModal.find('.loader-spinner').show();
+	$youtubeModal.find('.message').hide();
 
-	youtubeCropXHR && youtubeCropXHR.abort();
-
-	youtubeCropXHR = $.ajax({
-		url: 'youtube.php',
+	$.ajax({
+		url: 'editor.php',
+		type: 'POST',
 		data: {
-			action: 'download',
+			action: 'youtube-download',
 			videoID: videoID,
 		},
 		success: (response) => {
 			$youtubeModal.find('.loader-spinner').hide();
 
-			if (response.preview) {
+			if (response.success ) {
 				currentVideoID = response.videoID;
 				currentAudioPreview = response.preview;
 
@@ -159,6 +215,12 @@ function youtubeModalSubmit() {
 				$cropModal.show();
 
 				initCrop();
+			} else {
+				$youtubeModal
+					.find('.message')
+					.html('Unable to download/convert this video.')
+					.show()
+				;
 			}
 
 		},
@@ -176,14 +238,52 @@ function initCrop() {
 	cropStart = 0;
 	cropEnd = 0;
 
-	let $imageSelect = $('#crop-image-id');
+	let $imageUpload = $('#crop-image-upload');
+	let $imageUploadFile = $('#crop-image-upload-file');
+	let $imageYouTubeSelect = $('#crop-youtube-image-id');
 	let $imagePreview = $('#crop-image-preview');
-	$imageSelect.off('change').on('change', () => {
-		let imageId = $imageSelect.val();
-		$imagePreview.html(
-			imageId ? `<img src="https://img.youtube.com/vi/${currentVideoID}/${imageId}.jpg">`
-				: ''
-		);
+
+	$imageUpload.hide();
+	$imageUploadFile.prop('disabled', currentAddType === 'YOUTUBE');
+	$imageYouTubeSelect.hide();
+
+	if ( currentAddType === 'YOUTUBE' ) {
+		$cropModal.find('.crop-youtube').show();
+		$cropModal.find('.crop-upload').hide();
+
+		$imageYouTubeSelect.show();
+
+		$imageYouTubeSelect.off('change').on('change', () => {
+			let youtubeImageId = $imageYouTubeSelect.val();
+
+			$imageUploadFile.prop('disabled', youtubeImageId !== 'CUSTOM');
+
+			if ( youtubeImageId === 'CUSTOM' ) {
+				$imageUpload.show();
+			} else {
+				$imagePreview.html(
+					youtubeImageId ? `<img src="https://img.youtube.com/vi/${currentVideoID}/${youtubeImageId}.jpg">`
+						: ''
+				);
+				$imageUpload.hide();
+			}
+		}).trigger('change');
+	} else {
+		$cropModal.find('.crop-upload').show();
+		$cropModal.find('.crop-youtube').hide();
+		$imageUpload.show();
+	}
+
+	$imageUploadFile.off('change').on('change', () => {
+		let file = $imageUploadFile.get(0).files[0];
+		if ( file && $imageUpload.is(':visible') ) {
+			$imagePreview.html('<img id="crop-upload-image-preview">');
+			let reader = new FileReader();
+			reader.onload = function(e) {
+				$('#crop-upload-image-preview').attr('src', e.target.result);
+			};
+			reader.readAsDataURL(file);
+		}
 	}).trigger('change');
 
 	let $start = $('#crop-start');
@@ -270,30 +370,42 @@ function initCrop() {
 }
 
 function cropModalSubmit() {
-
-	let videoID = $('#youtube-video-id').val();
-
 	$cropModal.find('.loader-spinner').show();
 
-	youtubeCropXHR && youtubeCropXHR.abort();
+	const formData = new FormData();
 
-	youtubeCropXHR = $.ajax({
-		url: 'youtube.php',
-		data: {
-			action: 'crop',
-			videoID: videoID,
-			start: cropStart,
-			end: cropEnd,
-			dir: $('#crop-dir').val(),
-			filename: $('#crop-filename').val(),
-			imageId: $('#crop-image-id').val(),
-		},
+	formData.append('action', 'crop');
+
+	const files = $('#crop-image-upload-file').get(0).files;
+	if ( files.length ) {
+		formData.append('image', files[0]);
+	}
+
+	let videoID;
+	if ( currentAddType === 'YOUTUBE' ) {
+		videoID = $('#youtube-video-id').val();
+	} else {
+		videoID = '';
+	}
+
+	formData.append('videoID', videoID);
+	formData.append('start', cropStart);
+	formData.append('end', cropEnd);
+	formData.append('dir', $('#crop-dir').val());
+	formData.append('filename', $('#crop-filename').val());
+	formData.append('youtubeImageId', $('#crop-youtube-image-id:visible').val() || '');
+
+	$.ajax({
+		url: 'editor.php',
+		type: 'POST',
+		processData: false,
+		contentType: false,
+		data: formData,
 		success: () => {
-			$cropModal.find('.loader-spinner').show();
 			location.reload();
 		},
 		error: () => {
-			$cropModal.find('.loader-spinner').show();
+			$cropModal.find('.loader-spinner').hide();
 		}
 	});
 }
