@@ -10,7 +10,7 @@
         <span class="fa fa-arrow-down"></span>
     </button>
 
-    <button class="nav xhidden-local" data-action="speak">
+    <button class="nav hidden-local" data-action="speak">
         <span class="fa fa-bullhorn"></span>
     </button>
 
