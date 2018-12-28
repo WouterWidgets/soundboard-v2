@@ -8,17 +8,19 @@
         Loaded php.ini file: <code><?=php_ini_loaded_file();?></code>
     </div>
 
-    <h3>Add a clip</h3>
+	<div class="hidden-local">
+		<h3>Add a clip</h3>
 
-    <button type="button" class="form-button" data-action="upload">
-        <span class="fa fa-upload"></span>
-        Upload a clip
-    </button>
+		<button type="button" class="form-button" data-action="upload">
+			<span class="fa fa-upload"></span>
+			Upload a clip
+		</button>
 
-    <button type="button" class="form-button" data-action="youtube">
-        <span class="fa fa-youtube"></span>
-        Add clip from YouTube
-    </button>
+		<button type="button" class="form-button" data-action="youtube">
+			<span class="fa fa-youtube"></span>
+			Add clip from YouTube
+		</button>
+	</div>
 
     <hr>
 

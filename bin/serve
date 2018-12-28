@@ -58,6 +58,10 @@ fi
 truncate -s 0 ${PROJECT_DIR}/log/soundboard.log
 
 
+# Set volume to 100% (uncomment if needed)
+# amixer sset PCM,0 100% || true
+
+
 # Serve
 URL=http://${HOST_AND_PORT}
 
