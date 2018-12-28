@@ -75,11 +75,11 @@ if [ "$BROWSER" = true ]; then
     if which chromium-browser > /dev/null
     then
         printf "${GREEN}\nOpening chromium-browser${NORMAL}\n"
-        chromium-browser --start-fullscreen --disable-session-crashed-bubble $URL
+        chromium-browser --start-fullscreen --kiosk --app=$URL
     elif which chromium > /dev/null
     then
         printf "${GREEN}\nOpening chromium${NORMAL}\n"
-        chromium --start-fullscreen --disable-session-crashed-bubble $URL
+        chromium --start-fullscreen --kiosk --app=$URL
     elif which xdg-open > /dev/null
     then
         printf "${GREEN}\nOpening browser window${NORMAL}\n"
