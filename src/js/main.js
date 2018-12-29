@@ -23,6 +23,10 @@ $(() => {
 	$youtubeModal = $('#youtube-modal');
 	$cropModal = $('#crop-modal');
 
+	if ( $('html').hasClass('local') ) {
+		$files.find('button[title]').removeAttr('title');
+	}
+
 	$(document)
 		.on('click', 'button.file', fileClick)
 		.on('click', '[data-action]', actionClick)
