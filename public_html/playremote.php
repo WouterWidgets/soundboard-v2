@@ -13,7 +13,9 @@ if ( $config->whitelist_enabled ) {
 $type = filter_input(INPUT_POST, 'type', FILTER_SANITIZE_STRING) ?: 'audio';
 $src = filter_input(INPUT_POST, 'src', FILTER_SANITIZE_STRING);
 
-$src = urldecode($src);
+if ( $type !== 'speech' ) {
+    $src = urldecode($src);
+}
 
 if ( $type === 'exit' ) {
     exec('pkill chromium');
