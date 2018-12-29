@@ -108,7 +108,7 @@
             $label = getLabel($file, $extension);
 
             ?>
-            <button class="file"
+            <button class="file clip"
                     style="background-image:url('<?= $image ? ($dir . '/' . rawurlencode($image)) : ''; ?>')"
                     data-type="<?= $type; ?>"
                     data-src="<?= $dir . '/' . rawurlencode($file); ?>"

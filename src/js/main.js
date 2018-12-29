@@ -28,7 +28,7 @@ $(() => {
 	}
 
 	$(document)
-		.on('click', 'button.file', fileClick)
+		.on('click', 'button.file.clip', fileClick)
 		.on('click', '[data-action]', actionClick)
 	;
 });
