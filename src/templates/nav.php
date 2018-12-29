@@ -3,10 +3,10 @@
         <span class="fa fa-home"></span>
     </button>
 
-    <button class="nav" data-action="scroll:up">
+    <button class="nav hidden-remote" data-action="scroll:up">
         <span class="fa fa-arrow-up"></span>
     </button>
-    <button class="nav" data-action="scroll:down">
+    <button class="nav hidden-remote" data-action="scroll:down">
         <span class="fa fa-arrow-down"></span>
     </button>
 

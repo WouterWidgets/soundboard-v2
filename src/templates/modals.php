@@ -1,35 +1,38 @@
 <div class="modal" id="settings-modal">
 
-    <h3>Info</h3>
+	<form action="">
 
-    <div>
-        Soundboard IP: <code><?=$server_ip;?></code>
-        <br>
-        Loaded php.ini file: <code><?=php_ini_loaded_file();?></code>
-    </div>
+		<h3>Info</h3>
 
-	<div class="hidden-remote">
-		<br>
-		<button type="button" class="form-button" data-action="exit">Exit soundboard</button>
-	</div>
+		<div>
+			Soundboard IP: <code><?=$server_ip;?></code>
+			<br>
+			Loaded php.ini file: <code><?=php_ini_loaded_file();?></code>
+		</div>
 
-	<div class="hidden-local">
-		<h3>Add a clip</h3>
+		<div class="hidden-remote">
+			<br>
+			<button type="button" class="form-button" data-action="exit">Exit soundboard</button>
+		</div>
 
-		<button type="button" class="form-button" data-action="upload">
-			<span class="fa fa-upload"></span>
-			Upload a clip
-		</button>
+		<div class="hidden-local">
+			<h3>Add a clip</h3>
 
-		<button type="button" class="form-button" data-action="youtube">
-			<span class="fa fa-youtube"></span>
-			Add clip from YouTube
-		</button>
-	</div>
+			<button type="button" class="form-button" data-action="upload">
+				<span class="fa fa-upload"></span>
+				Upload a clip
+			</button>
 
-    <hr>
+			<button type="button" class="form-button" data-action="youtube">
+				<span class="fa fa-youtube"></span>
+				Add clip from YouTube
+			</button>
+		</div>
 
-    <button type="button" class="form-button" data-action="modal:hide">Close</button>
+		<hr>
+
+		<button type="button" class="form-button" data-action="modal:hide">Close</button>
+	</form>
 </div>
 
 <div class="modal" id="speech-modal">
