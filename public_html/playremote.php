@@ -15,6 +15,11 @@ $src = filter_input(INPUT_POST, 'src', FILTER_SANITIZE_STRING);
 
 $src = urldecode($src);
 
+if ( $type === 'exit' ) {
+    exec('pkill chromium');
+    exit;
+}
+
 if ( !$src || $config->player->stop_before_play ) {
     exec('pkill vlc');
     if ( !$src ) {

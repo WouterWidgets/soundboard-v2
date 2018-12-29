@@ -9,7 +9,8 @@
     </div>
 
 	<div class="hidden-remote">
-		<button type="button" class="form-button" data-action="exit">Exit</button>
+		<br>
+		<button type="button" class="form-button" data-action="exit">Exit soundboard</button>
 	</div>
 
 	<div class="hidden-local">

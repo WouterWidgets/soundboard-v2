@@ -52,3 +52,8 @@ Raspberry Pi installation
 ### Misc tips for running it on Raspberry Pi
 - You might want to set the 3.5mm audio as the default audio device.
 - Increase volume using `amixer sset PCM,0 90%`
+- If you want to hide the mouse cursor, follow these steps:
+    - Run `sudo apt-get install unclutter`
+    - Run `nano ~/.config/lxsession/LXDE-pi/autostart` (or `sudo nano /etc/xdg/lxsession/LXDE-pi/autostart` depending on your Raspbian version)
+    - Add this line: `@unclutter -idle 0` and save changes
+    - Reboot your device (`sudo reboot`)

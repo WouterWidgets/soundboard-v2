@@ -86,6 +86,13 @@ function actionClick() {
 
 		case 'exit':
 			window.close();
+			$.ajax({
+				url: 'playremote.php',
+				type: 'POST',
+				data: {
+					action: 'exit'
+				}
+			});
 			break;
 	}
 }
