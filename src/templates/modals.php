@@ -8,6 +8,10 @@
         Loaded php.ini file: <code><?=php_ini_loaded_file();?></code>
     </div>
 
+	<div class="hidden-remote">
+		<button type="button" class="form-button" data-action="exit">Exit</button>
+	</div>
+
 	<div class="hidden-local">
 		<h3>Add a clip</h3>
 

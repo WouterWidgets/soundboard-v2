@@ -83,6 +83,10 @@ function actionClick() {
 			$modals.hide();
 			$youtubeModal.show();
 			break;
+
+		case 'exit':
+			window.close();
+			break;
 	}
 }
 
